@@ -28,18 +28,18 @@ public:
     }
     
     bool isValidBST(TreeNode* root) {
-        if(!root || !root->left && !root->right)return true;
+        if(!root)return true;
         
-        long leftMax = LONG_MIN;
+        long leftMax = LONG_MIN; // using long to handle [-2147483648,null,2147483647]
         long rightMin = LONG_MAX;
-        // cout<<leftMax<<" "<<rightMin<<endl;
         findLMax(root->left, &leftMax);
         findRMin(root->right, &rightMin);
-        // cout<<"  "<<leftMax<<" "<<rightMin<<endl;
-        
-        
+                
         if(root->val <= leftMax || root->val >= rightMin)return false;
         
         return isValidBST(root->left) && isValidBST(root->right);
     }
 };
+
+        // cout<<leftMax<<" "<<rightMin<<endl;
+        // cout<<"  "<<leftMax<<" "<<rightMin<<endl;
