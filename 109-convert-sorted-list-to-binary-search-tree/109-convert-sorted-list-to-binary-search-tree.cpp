@@ -21,19 +21,20 @@
  */
 class Solution {
 public:
-    TreeNode* dfs (ListNode* head){
+    TreeNode* traverse (ListNode* head){
         if(!head)return NULL;
-        TreeNode* node = new TreeNode;
+        TreeNode* node = new TreeNode; // Node to return after putting mid value
         ListNode* mid = new ListNode;
         
-        if(!head->next){
+        if(!head->next){ // wrote this case to handle the case where only head remains
             ListNode* slow = head;
             node = new TreeNode((slow->val));
             head = NULL;
             mid = NULL;
         }
         else{
-            ListNode *dummy = new ListNode;
+            // creating dummy to initialize slow one before the head to get the pointer one before the mid
+            ListNode *dummy = new ListNode;  
             dummy -> next = head;
             ListNode *slow = dummy;
             ListNode* fast = head;
@@ -43,24 +44,18 @@ public:
                 fast = fast->next->next;
             }
                     
-            mid = slow->next;
-            slow->next = NULL;
+            mid = slow->next; // mid will be the next node to slow which will be the treenode value
+            slow->next = NULL; // terminating head pointer by putting null in slow next
             node = new TreeNode((mid->val));
             mid = mid->next;
         }
-        // cout<<"fast-slow: "<<fast->val<<" "<<slow->val<<endl;
         
-        
-        // if(!head->next)head = NULL;
-        // if(!mid-)mid = NULL;
-        // cout<<head->val<<" "<<mid->val<<endl;
-        
-        node->left = dfs(head);
-        node->right = dfs(mid);
+        node->left = traverse(head); // calling one both left & right with both the divided linked-lists 
+        node->right = traverse(mid);
         return node;
     }
     
     TreeNode* sortedListToBST(ListNode* head) {
-        return dfs(head);
+        return traverse(head);
     }
 };
