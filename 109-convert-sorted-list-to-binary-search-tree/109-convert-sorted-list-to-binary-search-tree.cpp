@@ -23,32 +23,27 @@ class Solution {
 public:
     TreeNode* traverse (ListNode* head){
         if(!head)return NULL;
-        TreeNode* node = new TreeNode; // Node to return after putting mid value
-        ListNode* mid = new ListNode;
         
         if(!head->next){ // wrote this case to handle the case where only head remains
-            ListNode* slow = head;
-            node = new TreeNode((slow->val));
-            head = NULL;
-            mid = NULL;
+            TreeNode* node = new TreeNode(head->val);
+            return node;
         }
-        else{
-            // creating dummy to initialize slow one before the head to get the pointer one before the mid
-            ListNode *dummy = new ListNode;  
-            dummy -> next = head;
-            ListNode *slow = dummy;
-            ListNode* fast = head;
+        
+        // creating dummy to initialize slow one before the head to get the pointer one before the mid
+        ListNode *dummy = new ListNode;  
+        dummy -> next = head;
+        ListNode *slow = dummy;
+        ListNode* fast = head;
             
-            while(fast && fast->next){
-                slow = slow->next;
-                fast = fast->next->next;
-            }
-                    
-            mid = slow->next; // mid will be the next node to slow which will be the treenode value
-            slow->next = NULL; // terminating head pointer by putting null in slow next
-            node = new TreeNode((mid->val));
-            mid = mid->next;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
         }
+                    
+        ListNode* mid = slow->next; // mid will be the next node to slow which will be the treenode value
+        slow->next = NULL; // terminating head pointer by putting null in slow next
+        TreeNode* node = new TreeNode(mid->val);
+        mid = mid->next;
         
         node->left = traverse(head); // calling one both left & right with both the divided linked-lists 
         node->right = traverse(mid);
