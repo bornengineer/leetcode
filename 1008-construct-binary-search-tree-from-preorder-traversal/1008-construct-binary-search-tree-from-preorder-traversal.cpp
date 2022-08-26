@@ -26,29 +26,11 @@ public:
     }
     
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        int n = preorder.size();
         int left = 0;
-        int right = n - 1;
+        int right = preorder.size() - 1;
         return helper(preorder, left, right);
     }
     
 };
         
         // cout<<left<<" "<<pos<<" "<<right<<endl;
-        
-        
-//         if(i == preorder.size())return NULL;
-        
-//         TreeNode* root = new TreeNode(preorder[i++]);
-        
-//         if(root->val < preorder[0]) root->left = bstFromPreorder(preorder);
-        
-//         else if(root->val > preorder[0]) root->right = bstFromPreorder(preorder);
-        
-//         else {
-//             root->left = bstFromPreorder(preorder);
-//             root->right = bstFromPreorder(preorder);
-//         }
-//         return root;
-// private: 
-//     int i = 0;
