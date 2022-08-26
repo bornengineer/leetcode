@@ -25,28 +25,31 @@ public:
         
         else if(root->val < key)root->right = deleteNode(root->right, key);
         
-        else{
-            if(!root->left && !root->right){
+        else{ // when the values matches
+            if(!root->left && !root->right){ // if it has no left & right
                 delete root;
                 return NULL;
             }
-            else if(!root->right){
+            else if(!root->right){ // if only left is present
                 TreeNode* temp = root->left;
                 root->left = NULL;
                 delete root->left;
                 root = temp;
             }
-            else if(!root->left){
+            else if(!root->left){ // if only right is present
                 TreeNode* temp = root->right;
                 root->right = NULL;
                 delete root->right;
                 root = temp;
             }
-            else{
+            else{ // if both are present
+                // here we will compute right's smallest to replace the node
+                // we can also find left's largest to replace
                 int smallest = root->right->val;
                 findSmallest(root->right, &smallest);
                 root->val = smallest;
                 
+                // calling the function again to delete smallest node from right subtree
                 root -> right = deleteNode(root->right, smallest);
             }
         }
