@@ -27,21 +27,25 @@ public:
         
         else{
             if(!root->left && !root->right){
-                // delete root;
+                delete root;
                 return NULL;
             }
             else if(!root->right){
-                root = root->left;
+                TreeNode* temp = root->left;
+                root->left = NULL;
+                delete root->left;
+                root = temp;
             }
             else if(!root->left){
-                root = root->right;
+                TreeNode* temp = root->right;
+                root->right = NULL;
+                delete root->right;
+                root = temp;
             }
             else{
                 int smallest = root->right->val;
-                // cout<<"small: "<<smallest<<endl;
                 findSmallest(root->right, &smallest);
                 root->val = smallest;
-                // cout<<smallest<<endl;
                 
                 root -> right = deleteNode(root->right, smallest);
             }
@@ -49,3 +53,5 @@ public:
         return root;
     }
 };
+                // cout<<"small: "<<smallest<<endl;
+                // cout<<smallest<<endl;
