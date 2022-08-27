@@ -18,17 +18,29 @@ public:
 //         return ans;
 //     }
     
+//     vector<int> findDuplicates(vector<int>& nums) {
+//         vector<int> freq(nums.size());
+//         vector<int> ans;
+//         for(int i = 0; i<nums.size(); i++){
+//             freq[nums[i]-1]++;
+//         }
+        
+//         for(int i = 0 ; i<nums.size(); i++)if(freq[i] > 1)ans.push_back(i+1);
+//         // for(auto i:freq)cout<<i<<" ";  
+        
+//         return ans;
+//     }
+    
     vector<int> findDuplicates(vector<int>& nums) {
-        vector<int> freq(nums.size());
+        sort(nums.begin(), nums.end());
         vector<int> ans;
-        for(int i = 0; i<nums.size(); i++){
-            freq[nums[i]-1]++;
+        
+        for(int i = 0; i<nums.size()-1; i++){
+            if(nums[i] == nums[i+1]){
+                ans.push_back(nums[i]);
+                i++;
+            }
         }
-        
-        for(int i = 0 ; i<nums.size(); i++)if(freq[i] > 1)ans.push_back(i+1);
-        // for(auto i:freq)cout<<i<<" ";  
-        
         return ans;
     }
-
 };
