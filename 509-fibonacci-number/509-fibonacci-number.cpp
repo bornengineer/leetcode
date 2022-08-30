@@ -20,17 +20,28 @@ public:
 //         return fibHelper(n, dp);
 //     }
     
+//     int fib(int n){
+//         if(n<2)return n;
+        
+//         vector<int> memo(n+1);
+//         memo[0] = 0;
+//         memo[1] = 1;
+        
+//         for(int i = 2; i<=n; i++){
+//             memo[i] = memo[i-2] + memo[i-1];
+//         }
+        
+//         return memo[n];
+//     }
+    
     int fib(int n){
         if(n<2)return n;
-        
-        vector<int> memo(n+1);
-        memo[0] = 0;
-        memo[1] = 1;
-        
-        for(int i = 2; i<=n; i++){
-            memo[i] = memo[i-2] + memo[i-1];
+        int a = 0, b = 1, c = 0;
+        for(int i = 1; i<n ; i++){
+            c = a + b;
+            a = b;
+            b = c;
         }
-        
-        return memo[n];
+        return c;
     }
 };
