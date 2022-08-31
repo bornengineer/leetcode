@@ -25,7 +25,7 @@ public:
     
     // using bottom up dp
     int climbStairs(int n) {
-        if(n <= 3)return n;
+        if(n <= 1)return n;
         vector<int> dp(n+1);
         dp[1] = 1;
         dp[2] = 2;
