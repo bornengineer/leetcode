@@ -1,15 +1,20 @@
+// class Solution {
+// public:    
+//     vector<int> countBits(int n) {
+        
+//     }
+// };
+
+
 class Solution {
 public:
     int countSetBits(int i){
-        string res;
+        int cnt = 0;
+        
         while(i > 0){
-            res.push_back(i % 2);
+            cnt += i % 2;
             i /= 2;
         }
-        reverse(res.begin(), res.end());
-        
-        int cnt = 0;
-        for(auto x : res)if(x == 1)cnt++;
         
         return cnt;
     }
