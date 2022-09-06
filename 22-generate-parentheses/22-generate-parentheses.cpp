@@ -1,7 +1,7 @@
 class Solution {
 public:
     void dfs(int o, int c, vector<string>& res, string s){
-        cout<<o<<" "<<c<<endl;
+        // cout<<o<<" "<<c<<endl;
         if(o == 0 && c == 0){
             res.push_back(s);
             return;
