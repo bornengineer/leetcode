@@ -11,16 +11,37 @@
  */
 class Solution {
 public:
+// wrote on 8 sept 2022
+//     vector<int> ret;
+//     vector<int> inorderTraversal(TreeNode* root) {
+//         if(!root)return {};
+//         inorderTraversal(root->left);
+//         ret.push_back(root->val);
+//         inorderTraversal(root->right);
+//         return ret;
+//     }
+           
+// wrote on 8 sept 2022
     vector<int> inorderTraversal(TreeNode* root) {
         if(!root)return {};
-        inorderTraversal(root->left);
-        ret.push_back(root->val);
-        inorderTraversal(root->right);
+        vector<int> ret;
+        stack<TreeNode*> st;
+        while(root || !st.empty()){
+            while(root){
+                st.push(root);
+                root = root->left;
+            }
+            root = st.top();
+            ret.push_back(st.top()->val);
+            st.pop();
+            
+            root = root->right;
+        }
         return ret;
     }
-           
     
-    vector<int> ret;
+    
+    // vector<int> ret;
     // vector<int> inorderTraversal(TreeNode* root) {
     //     if(!root)return {};
     //     inorderTraversal(root->left);
@@ -29,6 +50,7 @@ public:
     //     return ret;
     // }
     
+   
 //  iterative using stack (idea by - jianchao-li)
 //     vector<int> inorderTraversal(TreeNode* root) {
 //         if(!root)return {};
@@ -47,21 +69,3 @@ public:
 //         return ret;
 //     }
 };
-
-
-    // iterative using stacks by jianchao-li
-    // vector<int> inorderTraversal(TreeNode* root) {
-    //     vector<int> nodes;
-    //     stack<TreeNode*> todo;
-    //     while (root || !todo.empty()) {
-    //         while (root) {
-    //             todo.push(root);
-    //             root = root -> left;
-    //         }
-    //         root = todo.top();
-    //         todo.pop();
-    //         nodes.push_back(root -> val);
-    //         root = root -> right;
-    //     }
-    //     return nodes;
-    // }
