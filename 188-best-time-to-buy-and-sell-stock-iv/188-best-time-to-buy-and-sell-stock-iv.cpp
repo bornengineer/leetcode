@@ -51,26 +51,49 @@ public:
 */
 
 // RECURSION + MEMOIZATION USING 2D VECTOR
+// class Solution {
+// public:
+//     int f(int idx, int tranNo, vector<int>& p, int k, int n, vector<vector<int>>& memo){
+//         if(idx == n || tranNo == 2*k)return 0;
+        
+//         if(memo[idx][tranNo] != -1)return memo[idx][tranNo];
+        
+//         int profit = 0;
+//         if(tranNo % 2 == 0){
+//             profit = max(-p[idx] + f(idx+1, tranNo+1, p, k, n, memo), 0 + f(idx+1, tranNo, p, k, n, memo));
+//         }
+//         else{
+//             profit = max( p[idx] + f(idx+1, tranNo+1, p, k, n, memo), 0 + f(idx+1, tranNo, p, k, n, memo));
+//         }
+//         return memo[idx][tranNo] = profit;
+//     }
+    
+//     int maxProfit(int k, vector<int>& p) {
+//         int n = p.size();
+//         vector<vector<int>> memo(n, vector<int>(2*k, -1));
+//         return f(0, 0, p, k, n, memo);
+//     }
+// };
+
+// TABULATION USING 2D VECTOR (2D DP)
 class Solution {
 public:
-    int f(int idx, int tranNo, vector<int>& p, int k, int n, vector<vector<int>>& memo){
-        if(idx == n || tranNo == 2*k)return 0;
-        
-        if(memo[idx][tranNo] != -1)return memo[idx][tranNo];
-        
-        int profit = 0;
-        if(tranNo % 2 == 0){
-            profit = max(-p[idx] + f(idx+1, tranNo+1, p, k, n, memo), 0 + f(idx+1, tranNo, p, k, n, memo));
-        }
-        else{
-            profit = max( p[idx] + f(idx+1, tranNo+1, p, k, n, memo), 0 + f(idx+1, tranNo, p, k, n, memo));
-        }
-        return memo[idx][tranNo] = profit;
-    }
-    
     int maxProfit(int k, vector<int>& p) {
         int n = p.size();
-        vector<vector<int>> memo(n, vector<int>(2*k, -1));
-        return f(0, 0, p, k, n, memo);
+        vector<vector<int>> dp(n+1, vector<int>(2*k+1, 0));
+        
+        for(int idx = n-1; idx>=0; idx--){
+            for(int tranNo = 2*k -1; tranNo>=0; tranNo--){
+                int profit = 0;
+                if(tranNo % 2 == 0){
+                    profit = max(-p[idx] + dp[idx+1][tranNo+1], dp[idx+1][tranNo]);
+                }
+                else{
+                    profit = max( p[idx] + dp[idx+1][tranNo+1], dp[idx+1][tranNo]);
+                }
+                dp[idx][tranNo] = profit;
+            }
+        }
+        return dp[0][0]; 
     }
 };
