@@ -19,15 +19,23 @@ public:
     //     return cnt;
         
         int n = nums.size();
-        vector<int> check(n, 1);
+        vector<int> dp(n, 1);
         int ans = 1;
+        // we are checking for every position in nums and applying dp (bottom up)
+        // by checking previous index's LIS
         for(int i = 1; i<n; i++){
             for(int j = i-1; j>=0; j--){
-                if(nums[j] >= nums[i])continue;
-                int possibleAns = check[j] + 1;
-                if(possibleAns > check[i]){
-                    check[i] = possibleAns;
-                    ans = max(ans, check[i]);
+                
+                // if(nums[j] >= nums[i])continue;
+                // int possibleAns = dp[j] + 1;
+                // if(possibleAns > dp[i]){
+                //     dp[i] = possibleAns;
+                //     ans = max(ans, dp[i]);
+                // }
+                
+                if(nums[i] > nums[j]){
+                    dp[i] = max(dp[i], dp[j]+1);
+                    ans = max(ans, dp[i]);
                 }
             }
         }
