@@ -1,5 +1,6 @@
 class Solution {
 public:
+    /*
     bool canReach(vector<int>& arr, int start) {
         int n = arr.size();
         queue<int> q;
@@ -18,4 +19,23 @@ public:
         }
         return false;
     }
+    */
+    
+    bool helper(int i, vector<int>& arr){
+        if(i >= arr.size() || i < 0 || arr[i] < 0)return false;
+        
+        if(arr[i] == 0)return true;
+        
+        arr[i] = -arr[i];
+        
+        return helper(i + arr[i], arr) || helper(i - arr[i], arr);
+
+    }
+    
+    bool canReach(vector<int>& arr, int start) {
+        int i = start;
+        
+        return helper(i, arr);
+    }
+    
 };
