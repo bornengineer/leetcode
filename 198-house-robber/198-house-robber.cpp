@@ -18,19 +18,39 @@
 //     }
 // };
 
+// class Solution {
+// public:    
+//     int rob(vector<int>& nums) {
+//         int n = nums.size();
+//         if(n==1)return nums[0];
+//         vector<int> dp(n, 0);
+//         dp[0] = nums[0];
+//         dp[1] = max(nums[1], nums[0]);
+        
+//         for(int i = 2; i<n; i++){
+//             dp[i] = max(nums[i] + dp[i-2], 0 + dp[i-1]);
+//             // or dp[i+1] = max(dp[i], dp[i-1] + nums[i]);
+//         }
+        
+//         return dp[n-1];
+//     }
+// };
+
 class Solution {
 public:    
     int rob(vector<int>& nums) {
         int n = nums.size();
         if(n==1)return nums[0];
-        vector<int> dp(n, 0);
-        dp[0] = nums[0];
-        dp[1] = max(nums[1], nums[0]);
+        
+        int a = nums[0];
+        int b = max(nums[1], nums[0]);
         
         for(int i = 2; i<n; i++){
-            dp[i] = max(nums[i] + dp[i-2], 0 + dp[i-1]);
+            int c = b;
+            b = max(nums[i] + a, 0 + b);
+            a = c;
         }
         
-        return dp[n-1];
+        return b;
     }
 };
