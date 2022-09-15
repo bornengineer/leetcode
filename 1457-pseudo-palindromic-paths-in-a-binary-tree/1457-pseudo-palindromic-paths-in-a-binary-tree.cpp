@@ -10,68 +10,40 @@
  * };
  */
 class Solution {
-public:
-    
-    int cnt[10] = {};
-    int pseudoPalindromicPaths(TreeNode* n, int odds = 0, int res = 0) {
-        if (n != nullptr) {
-            odds += ++cnt[n->val] % 2 ? 1 : -1;
-            if (n->left == n->right)
-                res = odds < 2 ? 1 : 0;
-            else
-                res = pseudoPalindromicPaths(n->left, odds) 
-                    + pseudoPalindromicPaths(n->right, odds);
-            odds += --cnt[n->val] % 2 ? -1 : 1;
+public:   
+    void dfs(TreeNode* root, vector<int> &freq, int *cnt){
+        if(!root->left && !root->right){
+            freq[root->val]++;
+            
+            int oddOccurence = 0;
+            for(int j : freq){
+                if(j % 2 == 1)oddOccurence++;
+            }
+            if(oddOccurence < 2)(*cnt)++;
+            
+            freq[root->val]--;
+            return;
         }
-        return res;
+        
+        freq[root->val]++;
+        if(root->left)dfs(root->left, freq, cnt);
+            
+        if(root->right)dfs(root->right, freq, cnt);
+        freq[root->val]--;
     }
-        
-//     void dfs(TreeNode* root, vector<int> &ds, vector<vector<int>> &res){
-//         if(!root->left && !root->right){
-//             ds.push_back(root->val);
-//             res.push_back(ds);
-//             ds.pop_back();
-//             return;
-//         }
-        
-//         ds.push_back(root->val);
-//         if(root->left)dfs(root->left, ds, res);
-            
-//         if(root->right)dfs(root->right, ds, res);
-//         ds.pop_back();        
-//     }
     
-//     int pseudoPalindromicPaths (TreeNode* root) {
-//         vector<vector<int>> res;
-//         vector<int> ds;
-//         dfs(root, ds, res);
-        
-//         // for(auto i : res){
-//         //     for(auto x : i)cout<<x<<" ";
-//         //     cout<<endl;            
-//         // }
-        
-//         int cnt = 0;
-//         for(auto i : res){
-//             vector<int> freq(11, 0);
-//             for(int j = 0; j<i.size(); j++){
-//                 freq[i[j]]++;
-//             }
-//             int ones = 0;
-//             for(int j : freq){
-//                 if(j % 2 == 1){
-//                     cnt++;
-//                     ones++; 
-//                 }
-//                 // else if(j % 2 == 0){
-//                 //     evens++;
-//                 // }
-//             }
-//             if (ones > 1)cnt -= ones;
-//             else if (ones == 0) cnt = 1;
-            
-//             // cout<<cnt<<endl;
-//         }
-//         return cnt;
-//     }
+    int pseudoPalindromicPaths (TreeNode* root) {
+        vector<int> freq(10, 0);
+        int cnt = 0;             
+        dfs(root, freq, &cnt);
+        return cnt;
+    }
 };
+
+        // ds.push_back(root->val);
+        // res.push_back(ds);
+        // ds.pop_back();
+        // ds.push_back(root->val);
+        // ds.pop_back();   
+        // vector<vector<int>> res;
+        // vector<int> ds;
