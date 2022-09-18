@@ -1,3 +1,4 @@
+// Memoization
 /*class Solution {
 public:
     int rec(int idx, int amount, vector<int> &coins, vector<vector<int>> &dp){
@@ -26,7 +27,8 @@ public:
     }
 };*/
 
-class Solution {
+// DP
+/*class Solution {
 public:    
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
@@ -53,5 +55,37 @@ public:
         }
         
         return dp[n-1][amount];
+    }
+};*/
+
+// Space Optimized DP
+class Solution {
+public:    
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+
+        vector<int> prev(amount + 1, 0), curr(amount + 1, 0);
+        
+        for(int t = 0; t<=amount; t++){
+            prev[t] = t % coins[0] == 0;
+        }
+        
+        for(int idx = 1; idx < n; idx++){
+            for(int t = 0; t<=amount; t++){
+                // not pick
+                int notPick = prev[t];
+        
+                //pick
+                int pick = 0;
+                if(coins[idx] <= t){
+                    pick = curr[t - coins[idx]];
+                }
+
+                curr[t] = pick + notPick;
+            }
+            prev = curr;
+        }
+        
+        return prev[amount];
     }
 };
