@@ -1,35 +1,5 @@
 /*class Solution {
 public:
-    int rec(int idx, int sum, int amount, vector<int> &coins){
-        if(idx >= coins.size()){
-            if(sum != 0){
-                return (amount % sum == 0);
-            }
-        }
-
-        // cout<<sum<<" "<<*cnt<<"\n";
-        //pick
-        int pick = 0;
-        if(sum < amount){
-            sum += coins[idx];
-            pick = rec(idx, sum, amount, coins);
-            sum -= coins[idx];
-        }
-            
-        // not pick
-        int notPick = rec(idx+1, sum, amount, coins);   
-        
-        return pick + notPick;
-    }
-    
-    int change(int amount, vector<int>& coins) {
-        // vector<int> dp(n, -1);
-        return rec(0, 0, amount, coins);
-    }
-};*/
-
-class Solution {
-public:
     int rec(int idx, int amount, vector<int> &coins, vector<vector<int>> &dp){
         if(dp[idx][amount] != -1)return dp[idx][amount];
         
@@ -53,5 +23,35 @@ public:
         // making vector of amount+1 size cause it's value can be 0 also
         vector<vector<int>> dp(n, vector<int>(amount+1,-1));
         return rec(n-1, amount, coins, dp);
+    }
+};*/
+
+class Solution {
+public:    
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+        // making vector of amount+1 size cause it's value can be 0 also
+        vector<vector<int>> dp(n+1, vector<int>(amount+1,0));
+        
+        for(int t = 0; t<=amount; t++){
+            dp[0][t] = t % coins[0] == 0;
+        }
+        
+        for(int idx = 1; idx < n; idx++){
+            for(int t = 0; t<=amount; t++){
+                // not pick
+                int notPick = dp[idx-1][t];
+        
+                //pick
+                int pick = 0;
+                if(coins[idx] <= t){
+                    pick = dp[idx][t - coins[idx]];
+                }
+
+                dp[idx][t] = pick + notPick;
+            }
+        }
+        
+        return dp[n-1][amount];
     }
 };
