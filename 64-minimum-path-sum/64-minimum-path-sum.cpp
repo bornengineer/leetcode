@@ -24,6 +24,7 @@ public:
 */
 
 // Tabulation
+/*
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
@@ -43,5 +44,29 @@ public:
             }
         }
         return dp[m-1][n-1];
+    }
+};*/
+
+// Space Optimized Tabulation
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<int> prev(n, 0), curr(n, 0);
+        for(int row = 0; row<m; row++){
+            for(int col = 0; col<n; col++){
+                if(row == 0 && col == 0) curr[col] = grid[0][0];
+                else{   
+                    int top = INT_MAX, left = INT_MAX;
+                    if(row > 0)top = grid[row][col] + prev[col];
+
+                    if(col > 0)left = grid[row][col] + curr[col-1];
+
+                    curr[col] = min(top, left);
+                }
+            }
+            prev = curr;
+        }
+        return prev[n-1];
     }
 };
