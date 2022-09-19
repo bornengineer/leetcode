@@ -27,6 +27,7 @@ public:
 };*/
 
 // Tabulation
+/*
 class Solution {
 public:
     int uniquePaths(int m, int n) {
@@ -48,5 +49,31 @@ public:
             }
         }
         return dp[m-1][n-1];
+    }
+};*/
+
+// Space Optimized Tabulation
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<int> prev(n,0), curr(n,0);
+        for(int row = 0; row<m; row++){
+            for(int col = 0; col<n; col++){
+                if(row == 0 && col == 0)curr[col] = 1;
+                else{
+                    int sameRow = 0;
+                    if(col > 0){
+                        sameRow = curr[col-1];
+                    }
+                    int nextRow = 0;
+                    if(row > 0){
+                        nextRow = prev[col];
+                    }
+                    curr[col] = sameRow + nextRow;
+                }
+            }
+            prev = curr;
+        }
+        return prev[n-1];
     }
 };
