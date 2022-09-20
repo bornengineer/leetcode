@@ -1,3 +1,5 @@
+// Memoization
+/*
 class Solution {
 public:
     int countSetBits(string s){
@@ -31,5 +33,43 @@ public:
         int idx = strs.size();
         vector<vector<vector<int>>> dp(idx, vector<vector<int>>(m+1, vector<int>(n+1,-1)));
         return rec(idx-1, m, n, strs, dp); 
+    }
+};
+*/
+
+class Solution {
+public:
+    int countSetBits(string s){
+        int cnt = 0;
+        while(!s.empty()){
+            char c = s.back();
+            cnt += c == '1'? 1 : 0;
+            s.pop_back();
+        } 
+        return cnt;
+    }
+    
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int i = strs.size();
+        vector<vector<vector<int>>> dp(i+1, vector<vector<int>>(m+1, vector<int>(n+1)));
+        
+        for(int idx = 1; idx<=i; idx++){
+            for(int zeroes = 0; zeroes<=m; zeroes++){
+                for(int ones = 0; ones<=n; ones++){
+                    
+                    int o = countSetBits(strs[idx-1]);
+                    int z = strs[idx-1].size() - o;
+
+                    int take = 0;
+                    if(z <= zeroes && o <= ones){
+                        take = 1 + dp[idx-1][zeroes-z][ones-o];
+                    }
+                    int notTake = 0 + dp[idx-1][zeroes][ones];
+        
+                    dp[idx][zeroes][ones] = max(take,notTake);
+                }
+            }
+        }
+        return dp[i][m][n]; 
     }
 };
