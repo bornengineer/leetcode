@@ -43,32 +43,15 @@ public:
 #define mod 1000000007
 class Solution {
 public:
-    
     int concatenatedBinary(int n) {
-        string s=decimalToBinary(n);
-        return binaryToDecimal(s);
-    }
-	
-	string decimalToBinary(int n) { 
-         string str="";
-        for(int i=n;i>=1;--i){
-            int no=i;
-            while(no){
-                str+=(no%2)+'0';
-                no/=2;
-            }
+        long res = 0, len = 0;
+        for(int i = 1; i<=n; i++){
+            
+            if((i & (i-1)) == 0)len++;
+            
+            res = (res<<len)%mod;
+            res += i % mod;
         }
-        return str;
-    } 
-    
-    int binaryToDecimal(string n){
-        long long ans=0,powe=1;
-        for(int j=0;j<n.size();++j){
-                long long now=(n[j]-'0')*(powe);
-                powe*=2;
-                powe%=mod;
-                ans+=now;
-        }
-        return ans%mod;
+        return res;
     }
 };
